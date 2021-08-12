@@ -1491,7 +1491,9 @@ Alternatively, to run without multiprocessing, set parallel=False.
         for s in range(n_sims):
             this_iter = {k:v[s] for k,v in iterkwargs.items()} # Pull out items specific to this iteration
             this_iter.update(kwargs) # Merge with the kwargs
-            this_iter['sim'] = this_iter['sim'].copy() # Ensure we have a fresh sim; this happens implicitly on pickling with multiprocessing
+            # Here it is done shallow copy and deep copy is required.
+         #   this_iter['sim'] = this_iter['sim'].copy() # Ensure we have a fresh sim; this happens implicitly on pickling with multiprocessing
+            this_iter['sim'] = this_iter['sim'].clone() # Ensure we have a fresh sim; this happens implicitly on pickling with multiprocessing
             sim = single_run(**this_iter) # Run in series
             sims.append(sim)
 
