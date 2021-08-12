@@ -3,7 +3,7 @@ Base classes for Covasim. These classes handle a lot of the boilerplate of the
 People and Sim classes (e.g. loading, saving, key lookups, etc.), so those classes
 can be focused on the disease-specific functionality.
 '''
-
+from abc import ABC, abstractmethod
 import numpy as np
 import pandas as pd
 import sciris as sc
@@ -13,6 +13,7 @@ from . import utils as cvu
 from . import misc as cvm
 from . import defaults as cvd
 from . import parameters as cvpar
+from  copy import deepcopy
 
 # Specify all externally visible classes this file defines
 __all__ = ['ParsObj', 'Result', 'BaseSim', 'BasePeople', 'Person', 'FlexDict', 'Contacts', 'Layer']
@@ -187,7 +188,20 @@ def set_metadata(obj):
     return
 
 
-class BaseSim(ParsObj):
+
+class Prototype(ParsObj):
+    
+    def __init__(self,*args,**kwargs):
+         super().__init__(*args, **kwargs)
+
+    @abstractmethod
+    def clone(self):
+        pass 
+
+
+    
+
+class BaseSim(Prototype):
     '''
     The BaseSim class stores various methods useful for the Sim that are not directly
     related to simulating the epidemic. It is not used outside of the Sim object,
@@ -207,6 +221,9 @@ class BaseSim(ParsObj):
         '''
         return sc.prepr(self)
 
+
+    def clone(self):
+      return deepcopy(self)
 
     def _brief(self):
         '''
