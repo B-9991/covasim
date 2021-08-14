@@ -46,7 +46,7 @@ class Sim(cvb.BaseSim):
         sim = cv.Sim(pop_size=10e3, datafile='my_data.xlsx')
     '''
 
-    def __init__(self, pars=None, datafile=None, datacols=None, label=None, simfile=None,
+    def __init__(self, people,  pars=None, datafile=None, datacols=None, label=None, simfile=None,
                  popfile=None, load_pop=False, save_pop=False, version=None, **kwargs):
 
         # Set attributes
@@ -60,7 +60,6 @@ class Sim(cvb.BaseSim):
         self.data          = None     # The actual data
         self.popdict       = None     # The population dictionary
         self.t             = None     # The current time in the simulation (during execution); outside of sim.step(), its value corresponds to next timestep to be computed
-        self.people        = None     # Initialize these here so methods that check their length can see they're empty
         self.results       = {}       # For storing results
         self.summary       = None     # For storing a summary of the results
         self.initialized   = False    # Whether or not initialization is complete
@@ -72,12 +71,12 @@ class Sim(cvb.BaseSim):
         # Make default parameters (using values from parameters.py)
         default_pars = cvpar.make_pars(version=version) # Start with default pars
         super().__init__(default_pars) # Initialize and set the parameters as attributes
+        self.people        = people
 
         # Now update everything
         self.set_metadata(simfile)  # Set the simulation date and filename
         self.update_pars(pars, **kwargs)   # Update the parameters, if provided
         self.load_data(datafile, datacols) # Load the data, if provided
-
         return
 
 

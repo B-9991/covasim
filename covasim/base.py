@@ -193,6 +193,7 @@ class Prototype(ParsObj):
     
     def __init__(self,*args,**kwargs):
          super().__init__(*args, **kwargs)
+         self.people = None
 
     @abstractmethod
     def clone(self):
@@ -858,7 +859,141 @@ class BaseSim(Prototype):
 
 #%% Define people classes
 
-class BasePeople(FlexPretty):
+class InterfacePeople(FlexPretty):
+   
+    @abstractmethod
+    def __getitem__(self, key):
+        pass
+
+    @abstractmethod
+    def __setitem__(self, key):
+        pass
+
+    @abstractmethod
+    def lock(self):
+     pass
+
+
+
+    @abstractmethod
+    def __getitem__(self, key):
+     pass
+  
+
+    @abstractmethod
+    def __setitem__(self, key, value):
+     pass
+
+
+
+    @abstractmethod
+    def unlock(self):
+     pass
+
+    @abstractmethod
+    def __len__(self):
+     pass
+
+    @abstractmethod
+    def __iter__(self):
+     pass
+
+    @abstractmethod
+    def __add__(self, people2):
+     pass
+
+    @abstractmethod
+    def __radd__(self, people2):
+     pass
+
+    @abstractmethod
+    def _brief(self):
+     pass
+
+    @abstractmethod
+    def summarize(self, output=False):
+     pass
+
+    @abstractmethod
+    def set(self, key, value, die=True):
+     pass
+
+    @abstractmethod
+    def get(self, key):
+     pass
+
+    @abstractmethod
+    def true(self, key):
+     pass
+
+    @abstractmethod
+    def false(self, key):
+     pass
+
+    @abstractmethod
+    def defined(self, key):
+     pass
+
+    @abstractmethod
+    def undefined(self, key):
+     pass
+
+    @abstractmethod
+    def count(self, key):
+     pass
+
+    @abstractmethod
+    def count_by_variant(self, key, variant):
+     pass
+
+    @abstractmethod
+    def count_not(self, key):
+     pass
+
+    @abstractmethod
+    def set_pars(self, pars=None):
+     pass
+
+    @abstractmethod
+    def keys(self):
+     pass
+
+    @abstractmethod
+    def person_keys(self):
+     pass
+
+    @abstractmethod
+    def state_keys(self):
+     pass
+
+    @abstractmethod
+    def date_keys(self):
+     pass
+
+    @abstractmethod
+    def dur_keys(self):
+     pass
+
+    @abstractmethod
+    def layer_keys(self):
+     pass
+
+    @abstractmethod
+    def indices(self):
+     pass
+
+    @abstractmethod
+    def validate(self, die=True, verbose=False):
+     pass
+
+    @abstractmethod
+    def set_prognoses(self):
+     pass 
+ 
+
+
+
+class BasePeople(InterfacePeople):
     '''
     A class to handle all the boilerplate for people -- note that as with the
     BaseSim vs Sim classes, everything interesting happens in the People class,
